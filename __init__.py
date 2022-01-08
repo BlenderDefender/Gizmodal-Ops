@@ -27,8 +27,9 @@ bl_info = {
     "location": "3D View > G, R or S",
     "description": "An addon that blends Gizmo and Modal operations more seamlessly",
     "warning": "",
-    "wiki_url": "https://github.com/BlenderDefender/Gizmodal-Ops#gizmodal-ops",
+    "doc_url": "https://github.com/BlenderDefender/Gizmodal-Ops#gizmodal-ops",
     "tracker_url": "https://github.com/BlenderDefender/Gizmodal-Ops/issues",
+    "endpoint_url": "https://raw.githubusercontent.com/BlenderDefender/BlenderDefender/updater_endpoints/GIZMODALOPS.json",
     "category": "3D View"
 }
 
