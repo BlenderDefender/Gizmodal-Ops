@@ -26,7 +26,8 @@ from bpy.types import (
 )
 
 from . import (
-    operators
+    operators,
+    prefs
 )
 
 bl_info = {
@@ -45,6 +46,7 @@ bl_info = {
 
 modules = (
     operators,
+    prefs
 )
 
 

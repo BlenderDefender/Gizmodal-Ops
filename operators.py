@@ -39,9 +39,13 @@ class GIZMODAL_OPS_OT_base(Operator):
 
     def __init__(self) -> None:
         super().__init__()
+        prefs = bpy.context.preferences.addons[__package__].preferences
+
         # How many pixels the mouse has to be moved before triggering the modal operator.
-        self.mouse_pixel_error = 0  # TODO: Make this a setting.
-        self.time_window = 2  # TODO: Make this a setting.
+        self.mouse_pixel_error = 10 - prefs.mouse_sensitivity
+
+        # How long Gizmodal Ops should wait for additional keypresses.
+        self.time_window = prefs.time_window
 
         # Default the key to None
         # self.key = None
@@ -56,6 +60,8 @@ class GIZMODAL_OPS_OT_base(Operator):
         }
 
     def execute(self, context: Context):
+        prefs = context.preferences.addons[__package__].preferences
+
         # Set the Operator "phase" to KEYPRESS:
         # In this phase, Gizmodal Ops waits for either a mouse move
         # or a release event.
@@ -63,6 +69,11 @@ class GIZMODAL_OPS_OT_base(Operator):
 
         # Switch to the Gizmo.
         self._gizmo_function()
+
+        # If specified in the preferences, instantly invoke the modal function and exit.
+        if prefs.auto_lock_to_view:
+            self._modal_function("INVOKE_DEFAULT")
+            return {"FINISHED"}
 
         # Run this operator in modal mode.
         context.window_manager.modal_handler_add(self)
