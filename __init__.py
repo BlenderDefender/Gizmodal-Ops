@@ -50,11 +50,7 @@ modules = (
 )
 
 
-def register():
-    # Register all modules.
-    for mod in modules:
-        mod.register()
-
+def register_keymap(*args):
     wm = bpy.context.window_manager  # Get the window manager context
 
     # Get the default keymap for the 3D view
@@ -71,11 +67,7 @@ def register():
             kmi.idname = operator.bl_idname
 
 
-def unregister():
-    # Unregister all modules.
-    for mod in modules:
-        mod.unregister()
-
+def unregister_keymap(*args):
     wm = bpy.context.window_manager  # Get the window manager context
 
     # Get the default keymap for the 3D view
@@ -90,6 +82,31 @@ def unregister():
         # If the Keymap Item is not None, rewrite the Operator to the original Operator.
         if kmi:
             kmi.idname = idname
+
+
+def register():
+    # Register all modules.
+    for mod in modules:
+        mod.register()
+
+    # Try to register the keymap.
+    register_keymap()
+
+    # For safety, if the first method does fail,
+    # try to register the keymap 0.1 seconds after Blender loaded properly.
+    bpy.app.timers.register(register_keymap, first_interval=0.1)
+
+
+def unregister():
+    # Unregister all modules.
+    for mod in modules:
+        mod.unregister()
+
+    # Unregister the "Register Keymap" timer.
+    bpy.app.timers.unregister(register_keymap)
+
+    # Unregister the keymap, so no issues occur after uninstalling Gizmodal Ops.
+    unregister_keymap()
 
 
 # Allow running the script inside of Blenders text editor.
