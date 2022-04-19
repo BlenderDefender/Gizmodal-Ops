@@ -31,7 +31,7 @@ import time
 
 
 class GIZMODAL_OPS_OT_base(Operator):
-    # class GIZMODAL_OPS_OT_move(Operator):
+    # class GIZMODAL_OPS_OT_move(Operator):  # ! DEBUGGING ONLY
     """Base operator"""
     bl_idname = "gizmodal_ops.base"
     bl_label = "Base"
