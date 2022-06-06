@@ -103,8 +103,13 @@ def unregister():
     for mod in modules:
         mod.unregister()
 
-    # Unregister the "Register Keymap" timer.
-    bpy.app.timers.unregister(register_keymap)
+    # Try to unregister the "Register Keymap" timer, in case it still is registered.
+    try:
+        bpy.app.timers.unregister(register_keymap)
+    except Exception as e:
+        error_message = str(e).lower().replace('error', 'Warning')
+        print(
+            f"Gizmodal Ops Unregister - {error_message}")
 
     # Unregister the keymap, so no issues occur after uninstalling Gizmodal Ops.
     unregister_keymap()
