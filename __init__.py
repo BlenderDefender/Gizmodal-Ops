@@ -94,7 +94,8 @@ def register():
 
     # For safety, if the first method does fail,
     # try to register the keymap 0.1 seconds after Blender loaded properly.
-    bpy.app.timers.register(register_keymap, first_interval=0.1)
+    bpy.app.timers.register(
+        register_keymap, first_interval=0.1, persistent=True)
 
 
 def unregister():
