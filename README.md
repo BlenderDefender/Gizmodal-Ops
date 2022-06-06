@@ -1,2 +1,2 @@
 # Gizmodal-Ops
-Blend Gizmo and Modal operations more seamlessly
+An add-on that seamlessly blends Gizmo and Modal operations.
