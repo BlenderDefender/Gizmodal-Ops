@@ -81,12 +81,6 @@ def layout_preferences(layout: UILayout, prefs):
     label_row.label(
         text="when pressing G / R / S")
 
-    # IDEA: Change the text to "Auto", if it activates on a direct mouse move
-    # IDEA: and change it to "Instantly", if the modal operator instantly activates.
-    # IDEA: if prefs.auto_lock_to_view:
-    # IDEA:     prop_row.prop(prefs, "auto_lock_to_view", text="Instantly")
-    # IDEA: else:
-    # IDEA:     prop_row.prop(prefs, "auto_lock_to_view")
     prop_row = layout.row()
     prop_row.alignment = "RIGHT"
     prop_row.prop(prefs, "auto_lock_to_view")
@@ -135,8 +129,6 @@ class GIZMODAL_OPS_APT_preferences(AddonPreferences):
             text="then a short time window allows you to press X / Y / Z (etc) for Modal Operations.")
         description_col.label(
             text="Hold G / R / S + move mouse to trigger Lock to View Axis.")
-
-        layout_preferences(layout, self)
 
 
 classes = (
