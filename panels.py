@@ -25,8 +25,6 @@ from bpy.types import (
     Context
 )
 
-from .prefs import layout_preferences
-
 
 class GIZMODAL_OPS_PT_Panel(Panel):
     """Configure the options for Gizmodal Ops"""
@@ -40,7 +38,56 @@ class GIZMODAL_OPS_PT_Panel(Panel):
         layout = self.layout
         prefs = context.preferences.addons[__package__].preferences
 
-        layout_preferences(layout, prefs)
+        # Add a sublayout for all properties that are dependent on auto_lock_to_view.
+        numeric_props_col = layout.column()
+        numeric_props_col.enabled = not prefs.auto_lock_to_view
+
+        seconds_row = numeric_props_col.row()
+        seconds_col = seconds_row.column()
+
+        # Create a row for a label.
+        label_row = seconds_col.row()
+        label_row.label(
+            text="Listen for Modal Operations")
+        label_row = seconds_col.row()
+        label_row.label(
+            text="after pressing G / R / S for:")
+
+        # Display the time_window prop.
+        prop_row = seconds_col.row()
+        prop_row.alignment = "RIGHT"
+        prop_row.label(text="Seconds")
+        prop_row.prop(prefs, "time_window", text="")
+
+        # Create a row for a label.
+        label_row = numeric_props_col.row()
+        label_row.label(
+            text="Hold G / R / S + move mouse")
+        label_row = numeric_props_col.row()
+        label_row.label(
+            text="to trigger Lock to View Axis")
+        label_row = numeric_props_col.row()
+        label_row.label(
+            text="Mouse Sensitivity during hold:")
+
+        # Display the mouse_sensitivity prop.
+        prop_row = numeric_props_col.row()
+        prop_row.alignment = "RIGHT"
+        prop_row.label(text="0 - 10")
+        prop_row.prop(prefs, "mouse_sensitivity", text="")
+
+        # Create a row for a label.
+        label_row = layout.row()
+        label_row.label(
+            text="Switch to Lock to View Axis")
+        label_row = layout.row()
+        label_row.label(
+            text="when pressing G / R / S")
+
+        prop_row = layout.row()
+        prop_row.alignment = "RIGHT"
+        prop_row.prop(prefs, "auto_lock_to_view")
+        prop_row.label(text="")
 
 
 classes = (
