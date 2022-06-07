@@ -65,6 +65,17 @@ class GIZMODAL_OPS_APT_preferences(AddonPreferences):
 
         layout: UILayout = self.layout
 
+        # Add a sublayout for the addon description.
+        description_col = layout.column()
+        description_col.scale_y = 0.8
+
+        # Addon description
+        description_col.label(text="Press G / R / S to show the Gizmo,")
+        description_col.label(
+            text="then a short time window allows you to press X / Y / Z (etc) for Modal Operations.")
+        description_col.label(
+            text="Hold G / R / S + move mouse to trigger Lock to View Axis.")
+
         # Create a sublayout for all properties that are dependent on auto_lock_to_view.
         numeric_props_col = layout.column()
         numeric_props_col.enabled = not self.auto_lock_to_view
