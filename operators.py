@@ -119,7 +119,8 @@ class GIZMODAL_OPS_OT_base(Operator):
 
             return {"FINISHED"}
 
-        return {"PASS_THROUGH"}
+        # Execute shortcut-specific logic.
+        return self.shortcut_specific_handling(context, event)
 
     def keypress_phase(self, context: Context, event: Event):
         # Check, if the event is a mouse move.
@@ -155,6 +156,11 @@ class GIZMODAL_OPS_OT_base(Operator):
 
             return {"PASS_THROUGH"}
 
+        return {"PASS_THROUGH"}
+
+    def shortcut_specific_handling(self, context: Context, event: Event) -> set:
+        """This function enables to implement additional checks during the TIME_WINDOW phase.
+           This is meant for checks that are shortcut-specific, e.g. RR for trackball rotation."""
         return {"PASS_THROUGH"}
 
     def _modal_function(self, *args, **kwargs):
@@ -199,6 +205,20 @@ class GIZMODAL_OPS_OT_move(GIZMODAL_OPS_OT_base):
         super().__init__()
         self.key = "G"
 
+    def shortcut_specific_handling(self, context: Context, event: Event) -> set:
+        # The vertex slide only works when editing a mesh.
+        if not context.mode == "EDIT_MESH":
+            return {"PASS_THROUGH"}
+
+        # Check, whether the pressed key is G, which triggers the vertex slide operator.
+        if not self._compare_keypress(event, "G"):
+            return {"PASS_THROUGH"}
+
+        # Run the vertex slide operator.
+        bpy.ops.transform.vert_slide("INVOKE_DEFAULT")
+
+        return {"FINISHED"}
+
     def _modal_function(self, *args, **kwargs):
         bpy.ops.transform.translate(*args, **kwargs)
 
@@ -215,6 +235,16 @@ class GIZMODAL_OPS_OT_rotate(GIZMODAL_OPS_OT_base):
     def __init__(self) -> None:
         super().__init__()
         self.key = "R"
+
+    def shortcut_specific_handling(self, context: Context, event: Event) -> set:
+        # Check, whether the key is "R", which triggers the trackball rotation operator.
+        if not self._compare_keypress(event, "R"):
+            return {"PASS_THROUGH"}
+
+        # Execute the trackball rotation operator.
+        bpy.ops.transform.trackball("INVOKE_DEFAULT")
+
+        return {"FINISHED"}
 
     def _modal_function(self, *args, **kwargs):
         bpy.ops.transform.rotate(*args, **kwargs)
