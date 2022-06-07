@@ -164,12 +164,12 @@ class GIZMODAL_OPS_OT_base(Operator):
         return {"PASS_THROUGH"}
 
     def _modal_function(self, *args, **kwargs):
-        # Define the function, that will be called as the modal function.
+        """Define the function, that will be called as the modal function."""
         print(*args, **kwargs)
         # bpy.ops.transform.translate(*args, **kwargs)  # ! DEBUGGING ONLY
 
     def _gizmo_function(self, *args, **kwargs):
-        # Define the function, that will be called as the gizmo function.
+        """Define the function, that will be called as the gizmo function."""
         print(*args, **kwargs)
         # bpy.ops.wm.tool_set_by_id(
         # *args, name="builtin.move", **kwargs)  # ! DEBUGGING ONLY
@@ -178,9 +178,8 @@ class GIZMODAL_OPS_OT_base(Operator):
     # #def _ignore_event(self, keyevent: Event):
     # #    return keyevent.value != "RELEASE"
 
-    # Compare a keypress event with an exact
-    # combination of keys (including modifier keys such as crtl, shift, ...)
     def _compare_keypress(self, keyevent: Event, key: str, crtl=False, shift=False, alt=False, oskey=False):
+        """Compare a keypress event with an exact combination of keys (including modifier keys such as crtl, shift, ...)"""
         user_input = [keyevent.type, keyevent.ctrl,
                       keyevent.shift, keyevent.alt, keyevent.oskey]
         wanted_input = [key, crtl, shift, alt, oskey]
