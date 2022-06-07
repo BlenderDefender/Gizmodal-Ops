@@ -71,11 +71,17 @@ class GIZMODAL_OPS_APT_preferences(AddonPreferences):
         description_col.scale_y = 0.8
 
         # Addon description
+        description_col.label(text="Instructions:")
+        description_col.label(text="")
+
         description_col.label(text="Press G / R / S to show the Gizmo,")
         description_col.label(
-            text="then a short time window allows you to press X / Y / Z (etc) for Modal Operations.")
+            text="then a short time window allows you to activate Modal Operations")
+        description_col.label(text="by pressing X / Y / Z (etc).")
+        description_col.label(text="")
+
         description_col.label(
-            text="Hold G / R / S + move mouse to trigger Lock to View Axis.")
+            text="Hold G / R / S + move mouse to activate Lock to View Axis.")
 
 
 classes = (
