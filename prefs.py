@@ -34,6 +34,65 @@ from bpy.props import (
 )
 
 
+def layout_preferences(layout: UILayout, prefs):
+    # Add a sublayout for all properties that are dependent on auto_lock_to_view.
+    numeric_props_col = layout.column()
+    numeric_props_col.enabled = not prefs.auto_lock_to_view
+
+    seconds_row = numeric_props_col.row()
+    seconds_col = seconds_row.column()
+
+    # Create a row for a label.
+    label_row = seconds_col.row()
+    label_row.label(
+        text="Listen for Modal Operations")
+    label_row = seconds_col.row()
+    label_row.label(
+        text="after pressing G / R / S for:")
+
+    # Display the time_window prop.
+    prop_row = seconds_col.row()
+    prop_row.alignment = "RIGHT"
+    prop_row.label(text="Seconds")
+    prop_row.prop(prefs, "time_window", text="")
+
+    # Create a row for a label.
+    label_row = numeric_props_col.row()
+    label_row.label(
+        text="Hold G / R / S + move mouse")
+    label_row = numeric_props_col.row()
+    label_row.label(
+        text="to trigger Lock to View Axis")
+    label_row = numeric_props_col.row()
+    label_row.label(
+        text="Mouse Sensitivity during hold:")
+
+    # Display the mouse_sensitivity prop.
+    prop_row = numeric_props_col.row()
+    prop_row.alignment = "RIGHT"
+    prop_row.label(text="0 - 10")
+    prop_row.prop(prefs, "mouse_sensitivity", text="")
+
+    # Create a row for a label.
+    label_row = layout.row()
+    label_row.label(
+        text="Switch to Lock to View Axis")
+    label_row = layout.row()
+    label_row.label(
+        text="when pressing G / R / S")
+
+    # IDEA: Change the text to "Auto", if it activates on a direct mouse move
+    # IDEA: and change it to "Instantly", if the modal operator instantly activates.
+    # IDEA: if prefs.auto_lock_to_view:
+    # IDEA:     prop_row.prop(prefs, "auto_lock_to_view", text="Instantly")
+    # IDEA: else:
+    # IDEA:     prop_row.prop(prefs, "auto_lock_to_view")
+    prop_row = layout.row()
+    prop_row.alignment = "RIGHT"
+    prop_row.prop(prefs, "auto_lock_to_view")
+    prop_row.label(text="")
+
+
 class GIZMODAL_OPS_APT_preferences(AddonPreferences):
     bl_idname = __package__
 
@@ -44,6 +103,7 @@ class GIZMODAL_OPS_APT_preferences(AddonPreferences):
         min=0,
         max=30,
         soft_max=5,
+        precision=1,
         subtype="TIME"  # IDEA: TIME_ABSOLUTE is a thing since 3.0
     )
 
@@ -76,37 +136,7 @@ class GIZMODAL_OPS_APT_preferences(AddonPreferences):
         description_col.label(
             text="Hold G / R / S + move mouse to trigger Lock to View Axis.")
 
-        # Create a sublayout for all properties that are dependent on auto_lock_to_view.
-        numeric_props_col = layout.column()
-        numeric_props_col.enabled = not self.auto_lock_to_view
-
-        # Create a row for a label.
-        label_row = numeric_props_col.row()
-        label_row.label(
-            text="Listen for Modal Operations after pressing G / R / S for:")
-
-        # Display the time_window prop.
-        prop_row = numeric_props_col.row()
-        prop_row.prop(self, "time_window")
-
-        # Create a row for a label.
-        label_row = numeric_props_col.row()
-        label_row.label(
-            text="Listen for Modal Operations after pressing G / R / S for:")
-
-        # Display the mouse_sensitivity prop.
-        prop_row = numeric_props_col.row()
-        prop_row.prop(self, "mouse_sensitivity")
-
-        # Create a row for a label.
-        label_row = layout.row()
-        label_row.label(
-            text="Switch to Lock to View Axis when pressing G / R / S")
-
-        # IDEA: Change the text to "Auto", if it activates on a direct mouse move
-        # IDEA: and change it to "Instantly", if the modal operator instantly activates.
-        prop_row = layout.row()
-        prop_row.prop(self, "auto_lock_to_view")
+        layout_preferences(layout, self)
 
 
 classes = (
