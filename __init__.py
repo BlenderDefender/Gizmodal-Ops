@@ -36,7 +36,7 @@ bl_info = {
     "author": "Mat Brady, Blender Defender",
     "version": (1, 0, 0),
     "blender": (2, 83, 0),
-    "location": "3D View > G, R or S",
+    "location": "Sidebar > View Tab",
     "description": "An add-on that seamlessly blends Gizmo and Modal operations.",
     "warning": "",
     "doc_url": "https://github.com/BlenderDefender/Gizmodal-Ops#gizmodal-ops",
