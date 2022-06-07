@@ -71,9 +71,6 @@ class GIZMODAL_OPS_APT_preferences(AddonPreferences):
         description_col.scale_y = 0.8
 
         # Addon description
-        description_col.label(text="Instructions:")
-        description_col.label(text="")
-
         description_col.label(text="Press G / R / S to show the Gizmo,")
         description_col.label(
             text="then a short time window allows you to activate Modal Operations")
