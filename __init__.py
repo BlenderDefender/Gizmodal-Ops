@@ -55,13 +55,13 @@ modules = (
 def register_keymap(*args):
     wm = bpy.context.window_manager  # Get the window manager context
 
-    # Get the default keymap for the 3D view
-    default_km = wm.keyconfigs.default.keymaps["3D View"]
+    # Get the active keymap for the 3D view
+    active_km = wm.keyconfigs.active.keymaps["3D View"]
 
     # Iterate over all keymap items defined in operators.
     for idname, operator in operators.keymap:
         # Get the Keymap Item from the keymap by searching for the original Operator.
-        kmi: KeyMapItem = default_km.keymap_items.find_from_operator(
+        kmi: KeyMapItem = active_km.keymap_items.find_from_operator(
             idname, include={"KEYBOARD"})
 
         # If the Keymap Item is not None, rewrite the Operator to the corresponding Gizmodal Ops Operator.
@@ -72,13 +72,13 @@ def register_keymap(*args):
 def unregister_keymap(*args):
     wm = bpy.context.window_manager  # Get the window manager context
 
-    # Get the default keymap for the 3D view
-    default_km = wm.keyconfigs.default.keymaps["3D View"]
+    # Get the active keymap for the 3D view
+    active_km = wm.keyconfigs.active.keymaps["3D View"]
 
     # Iterate over all keymap items defined in operators.
     for idname, operator in operators.keymap:
         # Get the Keymap Item from the keymap by searching for the Gizmodal Ops Operator.
-        kmi: KeyMapItem = default_km.keymap_items.find_from_operator(
+        kmi: KeyMapItem = active_km.keymap_items.find_from_operator(
             operator.bl_idname, include={"KEYBOARD"})
 
         # If the Keymap Item is not None, rewrite the Operator to the original Operator.
