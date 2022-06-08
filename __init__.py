@@ -57,16 +57,19 @@ def register_keymap(*args):
 
     # Get the active keymap for the 3D view
     active_km = wm.keyconfigs.active.keymaps["3D View"]
+    find_km_item = active_km.keymap_items.find_from_operator
 
     # Iterate over all keymap items defined in operators.
     for idname, operator in operators.keymap:
         # Get the Keymap Item from the keymap by searching for the original Operator.
-        kmi: KeyMapItem = active_km.keymap_items.find_from_operator(
-            idname, include={"KEYBOARD"})
+        kmi: KeyMapItem = find_km_item(idname, include={"KEYBOARD"})
 
         # If the Keymap Item is not None, rewrite the Operator to the corresponding Gizmodal Ops Operator.
-        if kmi:
+        while kmi:
             kmi.idname = operator.bl_idname
+
+            # Repeat, until every Keymap Item is rewritten
+            kmi = find_km_item(idname, include={"KEYBOARD"})
 
 
 def unregister_keymap(*args):
@@ -74,16 +77,20 @@ def unregister_keymap(*args):
 
     # Get the active keymap for the 3D view
     active_km = wm.keyconfigs.active.keymaps["3D View"]
+    find_km_item = active_km.keymap_items.find_from_operator
 
     # Iterate over all keymap items defined in operators.
     for idname, operator in operators.keymap:
         # Get the Keymap Item from the keymap by searching for the Gizmodal Ops Operator.
-        kmi: KeyMapItem = active_km.keymap_items.find_from_operator(
+        kmi: KeyMapItem = find_km_item(
             operator.bl_idname, include={"KEYBOARD"})
 
         # If the Keymap Item is not None, rewrite the Operator to the original Operator.
-        if kmi:
+        while kmi:
             kmi.idname = idname
+
+            # Repeat, until every Keymap Item is rewritten
+            kmi = find_km_item(operator.bl_idname, include={"KEYBOARD"})
 
 
 def register():
