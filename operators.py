@@ -53,7 +53,12 @@ class GIZMODAL_OPS_OT_base(Operator):
 
         # Define a dictionary of keys that may be pressed within the time window
         # after the initial keypress.
-        self.other_keys = {
+        self.other_keys_2D = {
+            "X": {"shift": True, "constraint_axis": (True, False, False)},
+            "Y": {"shift": True, "constraint_axis": (False, True, False)},
+        }
+
+        self.other_keys_3D = {
             "X": {"shift": True, "constraint_axis": (True, False, False)},
             "Y": {"shift": True, "constraint_axis": (False, True, False)},
             "Z": {"shift": True, "constraint_axis": (False, False, True)}
@@ -61,6 +66,14 @@ class GIZMODAL_OPS_OT_base(Operator):
 
     def execute(self, context: Context):
         prefs = context.preferences.addons[__package__].preferences
+
+        self.other_keys = {}
+
+        if context.area.ui_type == "VIEW_3D":
+            self.other_keys = self.other_keys_3D
+
+        if context.area.ui_type == "UV":
+            self.other_keys = self.other_keys_2D
 
         # Set the Operator "phase" to KEYPRESS:
         # In this phase, Gizmodal Ops waits for either a mouse move
@@ -193,8 +206,12 @@ class GIZMODAL_OPS_OT_move(GIZMODAL_OPS_OT_base):
     bl_options = {'REGISTER', 'UNDO'}
 
     def shortcut_specific_handling(self, context: Context, event: Event) -> set:
+        # The vertex slide only works in the 3D View.
+        if context.area.ui_type != "VIEW_3D":
+            return {"PASS_THROUGH"}
+
         # The vertex slide only works when editing a mesh.
-        if not context.mode == "EDIT_MESH":
+        if context.mode != "EDIT_MESH":
             return {"PASS_THROUGH"}
 
         # Check, whether the pressed key is G, which triggers the vertex slide operator.

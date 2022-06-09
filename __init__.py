@@ -55,42 +55,50 @@ modules = (
 def register_keymap(*args):
     wm = bpy.context.window_manager  # Get the window manager context
 
-    # Get the active keymap for the 3D view
-    active_km = wm.keyconfigs.active.keymaps["3D View"]
-    find_km_item = active_km.keymap_items.find_from_operator
+    keymaps = ["3D View", "UV Editor"]
 
-    # Iterate over all keymap items defined in operators.
-    for idname, operator in operators.keymap:
-        # Get the Keymap Item from the keymap by searching for the original Operator.
-        kmi: KeyMapItem = find_km_item(idname, include={"KEYBOARD"})
+    t = [k.name for k in wm.keyconfigs.active.keymaps]
 
-        # If the Keymap Item is not None, rewrite the Operator to the corresponding Gizmodal Ops Operator.
-        while kmi:
-            kmi.idname = operator.bl_idname
+    for map in keymaps:
+        # Get the active keymap for the 3D view
+        active_km = wm.keyconfigs.active.keymaps[map]
+        find_km_item = active_km.keymap_items.find_from_operator
 
-            # Repeat, until every Keymap Item is rewritten
-            kmi = find_km_item(idname, include={"KEYBOARD"})
+        # Iterate over all keymap items defined in operators.
+        for idname, operator in operators.keymap:
+            # Get the Keymap Item from the keymap by searching for the original Operator.
+            kmi: KeyMapItem = find_km_item(idname, include={"KEYBOARD"})
+
+            # If the Keymap Item is not None, rewrite the Operator to the corresponding Gizmodal Ops Operator.
+            while kmi:
+                kmi.idname = operator.bl_idname
+
+                # Repeat, until every Keymap Item is rewritten
+                kmi = find_km_item(idname, include={"KEYBOARD"})
 
 
 def unregister_keymap(*args):
     wm = bpy.context.window_manager  # Get the window manager context
 
-    # Get the active keymap for the 3D view
-    active_km = wm.keyconfigs.active.keymaps["3D View"]
-    find_km_item = active_km.keymap_items.find_from_operator
+    keymaps = ["3D View", "UV Editor"]
 
-    # Iterate over all keymap items defined in operators.
-    for idname, operator in operators.keymap:
-        # Get the Keymap Item from the keymap by searching for the Gizmodal Ops Operator.
-        kmi: KeyMapItem = find_km_item(
-            operator.bl_idname, include={"KEYBOARD"})
+    for map in keymaps:
+        # Get the active keymap for the 3D view
+        active_km = wm.keyconfigs.active.keymaps[map]
+        find_km_item = active_km.keymap_items.find_from_operator
 
-        # If the Keymap Item is not None, rewrite the Operator to the original Operator.
-        while kmi:
-            kmi.idname = idname
+        # Iterate over all keymap items defined in operators.
+        for idname, operator in operators.keymap:
+            # Get the Keymap Item from the keymap by searching for the Gizmodal Ops Operator.
+            kmi: KeyMapItem = find_km_item(
+                operator.bl_idname, include={"KEYBOARD"})
 
-            # Repeat, until every Keymap Item is rewritten
-            kmi = find_km_item(operator.bl_idname, include={"KEYBOARD"})
+            # If the Keymap Item is not None, rewrite the Operator to the original Operator.
+            while kmi:
+                kmi.idname = idname
+
+                # Repeat, until every Keymap Item is rewritten
+                kmi = find_km_item(operator.bl_idname, include={"KEYBOARD"})
 
 
 def register():
@@ -98,10 +106,7 @@ def register():
     for mod in modules:
         mod.register()
 
-    # Try to register the keymap.
-    register_keymap()
-
-    # For safety, if the first method does fail,
+    # Since Blender doesn't load the keymaps before registering,
     # try to register the keymap 0.1 seconds after Blender loaded properly.
     bpy.app.timers.register(
         register_keymap, first_interval=0.1, persistent=True)
