@@ -74,10 +74,14 @@ class GIZMODAL_OPS_APT_preferences(AddonPreferences):
         description_col.label(
             text="then a short time window allows you to activate Modal Operations")
         description_col.label(text="by pressing X / Y / Z (etc).")
-        description_col.label(text="")
+        description_col.separator(factor=2.5)
 
         description_col.label(
             text="Hold G / R / S + move mouse to activate Lock to View Axis.")
+
+        description_col.separator(factor=7.5)
+        description_col.label(
+            text="Supports default Blender keymap. Compatibility with other keymaps will vary.", icon="ERROR")
 
 
 classes = (
