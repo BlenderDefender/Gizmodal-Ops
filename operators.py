@@ -47,9 +47,9 @@ class GIZMODAL_OPS_OT_base(Operator):
         # How long Gizmodal Ops should wait for additional keypresses.
         self.time_window = prefs.time_window
 
-        # Default the key to None
-        # self.key = None
-        # self.key = "G"  # ! DEBUGGING ONLY
+        # Event types, that trigger the TIME_WINDOW phase.
+        self.keypress_events = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "GRLESS", "ESC", "TAB", "RET", "SPACE", "LINE_FEED", "BACK_SPACE", "DEL", "SEMI_COLON", "PERIOD", "COMMA", "QUOTE", "ACCENT_GRAVE", "MINUS", "PLUS", "SLASH", "BACK_SLASH", "EQUAL", "LEFT_BRACKET", "RIGHT_BRACKET", "LEFT_ARROW", "DOWN_ARROW",
+                                "RIGHT_ARROW", "UP_ARROW", "NUMPAD_2", "NUMPAD_4", "NUMPAD_6", "NUMPAD_8", "NUMPAD_1", "NUMPAD_3", "NUMPAD_5", "NUMPAD_7", "NUMPAD_9", "NUMPAD_PERIOD", "NUMPAD_SLASH", "NUMPAD_ASTERIX", "NUMPAD_0", "NUMPAD_MINUS", "NUMPAD_ENTER", "NUMPAD_PLUS", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19", "F20", "F21", "F22", "F23", "F24", "PAUSE", "INSERT", "HOME", "PAGE_UP", "PAGE_DOWN", "END", "WINDOW_DEACTIVATE"]
 
         # Define a dictionary of keys that may be pressed within the time window
         # after the initial keypress.
@@ -88,10 +88,6 @@ class GIZMODAL_OPS_OT_base(Operator):
         # If the time window is over, stop the execution of Gizmodal Ops.
         if time.time() - self.start_time >= self.time_window:
             return {"FINISHED"}
-
-        # #Ignore certain key events. It looks like there is no reason to do so...
-        # #if event.type in ["MOUSEMOVE", "RIGHT_SHIFT", "LEFT_SHIFT", "TIMER"]:
-        # #    return {"RUNNING_MODAL"}
 
         # Check, if the key is one of the additional keys that may be pressed in the time window.
         if event.type in self.other_keys.keys():
@@ -138,11 +134,11 @@ class GIZMODAL_OPS_OT_base(Operator):
             return {"FINISHED"}
 
         # Check, if the key was released.
-        if self._compare_keypress(event, self.key):
-            # if self._ignore_event(event):
-            # Only listen for RELEASE events.
-            if event.value != "RELEASE":
-                return {"PASS_THROUGH"}
+        if event.type in self.keypress_events:
+
+            # Ignore PRESS events.
+            if event.value == "PRESS":
+                return {"RUNNING_MODAL"}
 
             print("Hello from the modal operator.")
 
@@ -174,10 +170,6 @@ class GIZMODAL_OPS_OT_base(Operator):
         # bpy.ops.wm.tool_set_by_id(
         # *args, name="builtin.move", **kwargs)  # ! DEBUGGING ONLY
 
-    # #Ignore a keypress event, if the value is not RELEASE.
-    # #def _ignore_event(self, keyevent: Event):
-    # #    return keyevent.value != "RELEASE"
-
     def _compare_keypress(self, keyevent: Event, key: str, crtl=False, shift=False, alt=False, oskey=False):
         """Compare a keypress event with an exact combination of keys (including modifier keys such as crtl, shift, ...)"""
         user_input = [keyevent.type, keyevent.ctrl,
@@ -199,10 +191,6 @@ class GIZMODAL_OPS_OT_move(GIZMODAL_OPS_OT_base):
     bl_idname = "gizmodal_ops.move"
     bl_label = "Move"
     bl_options = {'REGISTER', 'UNDO'}
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.key = "G"
 
     def shortcut_specific_handling(self, context: Context, event: Event) -> set:
         # The vertex slide only works when editing a mesh.
@@ -231,10 +219,6 @@ class GIZMODAL_OPS_OT_rotate(GIZMODAL_OPS_OT_base):
     bl_label = "Rotate"
     bl_options = {'REGISTER', 'UNDO'}
 
-    def __init__(self) -> None:
-        super().__init__()
-        self.key = "R"
-
     def shortcut_specific_handling(self, context: Context, event: Event) -> set:
         # Check, whether the key is "R", which triggers the trackball rotation operator.
         if not self._compare_keypress(event, "R"):
@@ -257,10 +241,6 @@ class GIZMODAL_OPS_OT_scale(GIZMODAL_OPS_OT_base):
     bl_idname = "gizmodal_ops.scale"
     bl_label = "Scale"
     bl_options = {'REGISTER', 'UNDO'}
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.key = "S"
 
     def _modal_function(self, *args, **kwargs):
         bpy.ops.transform.resize(*args, **kwargs)
