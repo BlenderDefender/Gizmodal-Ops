@@ -41,9 +41,8 @@ class GIZMODAL_OPS_APT_preferences(AddonPreferences):
         name="Time Window",
         description="The time frame, while Gizmodal Ops listens for additional keypresses",
         default=2,
-        min=0,
-        max=30,
-        soft_max=5,
+        max=5,
+        min=1,
         precision=1,
         subtype="TIME"  # IDEA: TIME_ABSOLUTE is a thing since 3.0
     )
