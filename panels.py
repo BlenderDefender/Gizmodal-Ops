@@ -65,12 +65,12 @@ class GIZMODAL_OPS_PT_Panel(Panel):
         # Create a column for a label.
         label_col = numeric_props_col.column()
         label_col.scale_y = SPACING
-        label_col.label(text="────────────────────────────")
+        label_col.label(text="────────────────────────")
         label_col.label(
             text="Hold G / R / S + move mouse")
         label_col.label(
             text="to trigger Lock to View Axis")
-        label_col.label(text="────────────────────────────")
+        label_col.label(text="────────────────────────")
 
         label_col.separator(factor=SPACING)  # Insert horizontal space.
 
