@@ -7,3 +7,4 @@ The moment you start using Gizmodal Ops you’ll never want to go back to standa
 Features:
 - **Reveals/Hides** the gizmo during modal operations.
 - Makes working in Blender much **easier** & more **intuitive**.
+- **Indispensable** for teachers.
