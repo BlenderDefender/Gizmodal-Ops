@@ -57,11 +57,14 @@ def register_keymap(*args):
 
     keymaps = ["3D View", "UV Editor"]
 
-    t = [k.name for k in wm.keyconfigs.active.keymaps]
-
     for map in keymaps:
-        # Get the active keymap for the 3D view
-        active_km = wm.keyconfigs.active.keymaps[map]
+        # Try to get the active keymap for the current map name.
+        active_km = wm.keyconfigs.active.keymaps.get(map, None)
+
+        if not active_km:
+            print(f"Gizmodal Ops Register - Warning: Key {map} not found.")
+            continue
+
         find_km_item = active_km.keymap_items.find_from_operator
 
         # Iterate over all keymap items defined in operators.
@@ -83,8 +86,13 @@ def unregister_keymap(*args):
     keymaps = ["3D View", "UV Editor"]
 
     for map in keymaps:
-        # Get the active keymap for the 3D view
-        active_km = wm.keyconfigs.active.keymaps[map]
+        # Try to get the active keymap for the current map name.
+        active_km = wm.keyconfigs.active.keymaps.get(map, None)
+
+        if not active_km:
+            print(f"Gizmodal Ops Unregister - Warning: Key {map} not found.")
+            continue
+
         find_km_item = active_km.keymap_items.find_from_operator
 
         # Iterate over all keymap items defined in operators.
