@@ -55,7 +55,9 @@ modules = (
 def register_keymap(*args):
     wm = bpy.context.window_manager  # Get the window manager context
 
-    keymaps = ["3D View", "UV Editor"]
+    # ! The 3D View keymap is not needed in Blender 4.0 and newer.
+    # ! It is there, to work with legacy Blender versions (3.x and older)
+    keymaps = ["3D View", "Pose", "Object Mode", "Curve", "Curves", "Mesh", "Armature", "Metaball", "Lattice", "UV Editor"]
 
     for map in keymaps:
         # Try to get the active keymap for the current map name.
