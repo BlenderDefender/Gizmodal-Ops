@@ -34,7 +34,7 @@ from . import (
 bl_info = {
     "name": "Gizmodal Ops",
     "author": "Mat Brady, Blender Defender",
-    "version": (1, 0, 0),
+    "version": (1, 0, 1),
     "blender": (2, 83, 0),
     "location": "Sidebar > View Tab",
     "description": "An add-on that seamlessly blends Gizmo and Modal operations.",
@@ -57,7 +57,8 @@ def register_keymap(*args):
 
     # ! The 3D View keymap is not needed in Blender 4.0 and newer.
     # ! It is there, to work with legacy Blender versions (3.x and older)
-    keymaps = ["3D View", "Pose", "Object Mode", "Curve", "Curves", "Mesh", "Armature", "Metaball", "Lattice", "UV Editor"]
+    keymaps = ["3D View", "Pose", "Object Mode", "Curve", "Curves",
+               "Mesh", "Armature", "Metaball", "Lattice", "UV Editor"]
 
     for map in keymaps:
         # Try to get the active keymap for the current map name.
