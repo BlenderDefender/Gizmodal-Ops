@@ -1,13 +1,18 @@
 # Gizmodal-Ops
-<!-- Video demo here -->
-The moment you start using Gizmodal Ops you’ll never want to go back to standard Blender ever again. This is a more **intuitive** way of working that you need to experience to understand. It seamlessly blends two workflows already in Blender into one harmonious workflow.
+
+Gizmodal Ops takes the Gizmo workflow from other 3D software (tap a key to show the transform, rotation or scale gizmo) and blends this seamlessly with Blender's Modal workflow (for precise transforms, rotations and scaling).
+
+Gizmodal Ops "listens" to your keystrokes and changes the workflow depending on your input. For example, a single key press keeps the Gizmo visible, but multiple key presses changes your scene to a Modal workflow. (Click the [video link](https://www.youtube.com/watch?v=fbHcUv9B2BI) for a better explanation on how this works).
+
+This harmonised workflow is perfect for people coming from other 3D programs without sacrificing the benefits of Blender's modal operations. Ideal for first-time users and Blender veterans alike.
+
+Using Gizmodal Ops is a much more intuitive way of working which you will need to experience to understand and appreciate fully.
 
 **For Blender 2.83 and above.**
 
 Features:
-- Access Gizmo and modal operations with **one shortcut**.
-- Makes working in Blender much **easier** & more **intuitive**.
-- **Indispensable** for teachers.
+- Intuitively switches between workflows.
+- 100% free
 
 ## How to install this addon:
 
