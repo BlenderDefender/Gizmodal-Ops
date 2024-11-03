@@ -2,7 +2,7 @@ schema_version = "1.0.0"
 
 id = "blenderdefender_gizmodalops"
 name = "Gizmodal Ops"
-version = "1.0.1"
+version = "1.0.2"
 tagline = "An add-on that seamlessly blends Gizmo and Modal operations"
 maintainer = "Mat Brady, Blender Defender"
 website = "https://github.com/BlenderDefender/Gizmodal-Ops/issues"
@@ -10,6 +10,7 @@ website = "https://github.com/BlenderDefender/Gizmodal-Ops/issues"
 type = "add-on"
 blender_version_min = "4.2.0"
 license = ["SPDX:GPL-3.0-or-later"]
+tags = ["User Interface", "3D View"]
 
 [build]
 paths_exclude_pattern = [
