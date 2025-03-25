@@ -2,7 +2,7 @@ schema_version = "1.0.0"
 
 id = "blenderdefender_gizmodalops"
 name = "Gizmodal Ops"
-version = "1.0.2"
+version = "1.0.3"
 tagline = "An add-on that seamlessly blends Gizmo and Modal operations"
 maintainer = "Mat Brady, Blender Defender"
 website = "https://github.com/BlenderDefender/Gizmodal-Ops/issues"

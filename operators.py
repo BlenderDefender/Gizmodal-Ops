@@ -37,8 +37,8 @@ class GIZMODAL_OPS_OT_base(Operator):
     bl_label = "Base"
     bl_options = {'REGISTER', 'UNDO'}
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
         prefs = bpy.context.preferences.addons[__package__].preferences
 
         # How many pixels the mouse has to be moved before triggering the modal operator.

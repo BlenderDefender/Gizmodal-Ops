@@ -34,7 +34,7 @@ from . import (
 bl_info = {
     "name": "Gizmodal Ops",
     "author": "Mat Brady, Blender Defender",
-    "version": (1, 0, 1),
+    "version": (1, 0, 3),
     "blender": (2, 83, 0),
     "location": "Sidebar > View Tab",
     "description": "An add-on that seamlessly blends Gizmo and Modal operations.",
